@@ -1,6 +1,7 @@
 #!/bin/bash
 
-branch=$(git branch | grep '*' | cut -d ' ' -f 2)
+branch=$BRANCH_NAME
+echo "Branch - $branch"
 
 if [ "$branch" = "production/deploy" ]
 then
@@ -22,9 +23,9 @@ echo $stage
 cd web
 make build version=$webversion
 make push version=$webversion
-make deploy version=$webversion
+make deploy version=$webversion namespace=$namespace
 
 cd ../api
 make build version=$apiversion
 make push version=$apiversion
-make deploy version=$apiversion
+make deploy version=$apiversion namespace=$namespace
